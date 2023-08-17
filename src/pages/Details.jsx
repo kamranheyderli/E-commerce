@@ -11,9 +11,9 @@ const Details = () => {
         axios.get(`https://fakestoreapi.com/products/${id}`)
             .then(response => setData(response.data))
             .catch(error => console.error('ERRORR:', error));
-    }, []);
+    }, [id]);
 
-    const { image, description, price, title, place } = data;
+    const { image, description, price, title,} = data;
 
     return (
 
