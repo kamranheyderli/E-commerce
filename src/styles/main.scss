@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+    width: 80%;
+    margin: 0 auto
+}
+
+// components
+@import "./components/Navbar.scss";
+@import "./components/CardShop.scss";
+
+@import "./pages/Home.scss";
+@import "./pages/Details.scss"
