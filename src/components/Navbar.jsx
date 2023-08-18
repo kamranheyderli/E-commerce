@@ -59,8 +59,8 @@ const Navbar = () => {
                     <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                         <div className="sidebar_head">
 
-                            <div className="total_price">
-                                <h2> Total Price:</h2><span>{totalPrice.toFixed(2)}</span>
+                            <div className="total_price" >
+                                <h2> Total Price:</h2><span>{totalPrice.toFixed(2)}$</span>
                             </div>
                             <GrClose style={{ fontSize: "25px", marginRight: "10px", marginTop: "10px" }} onClick={toggleSidebar} />
                         </div>
