@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { SlBasket } from "react-icons/sl";
 import { GrClose } from "react-icons/gr";
 // redux_toolkit
-import { removeItem } from '../redux/root/addToCardSlice';
+import { removeItem,initializeCartFromLocalStorage  } from '../redux/root/addToCardSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Navbar = () => {
@@ -14,31 +14,32 @@ const Navbar = () => {
     const cartItems = useSelector(state => state.cart.items);
     const totalQuantity = useSelector(state => state.cart.totalQuantity);
     const totalPrice = useSelector(state => state.cart.totalPrice);
-   
 
-
-    useEffect(() => {
-        const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
-        dispatch({ type: 'cart/setCartItems', payload: storedCartItems });
-    }, [dispatch]);
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems]);
+
+    useEffect(() => {
+
+        dispatch(initializeCartFromLocalStorage());
+    }, [dispatch]);
 
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-
     const removeFromCartHandler = (product) => {
         dispatch(removeItem(product.id));
-    
+
         const updatedCartItems = cartItems.filter(item => item.id !== product.id);
         localStorage.setItem('cart', JSON.stringify(updatedCartItems));
-    
+
         if (updatedCartItems.length === 0) {
+            setIsSidebarOpen(false);
+        }
+        if (totalQuantity == 0) {
             setIsSidebarOpen(false);
         }
     };
@@ -61,7 +62,7 @@ const Navbar = () => {
                         <div className="sidebar_head">
 
                             <div className="total_price">
-                                <h2> Total Price:</h2><span>{totalPrice.toFixed(2) }</span>
+                                <h2> Total Price:</h2><span>{totalPrice.toFixed(2)}</span>
                             </div>
                             <GrClose style={{ fontSize: "25px", marginRight: "10px", marginTop: "10px" }} onClick={toggleSidebar} />
                         </div>

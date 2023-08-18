@@ -3,6 +3,8 @@
     height: 100vh;
     display: flex;
     justify-content: space-around;
+    padding-top: 10%;
+ 
 
     .details_image {
         width: 40%;
@@ -72,7 +74,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding-top: 25px;
+            padding-top: 35%;
 
             .details_image {
                 width: 80%;

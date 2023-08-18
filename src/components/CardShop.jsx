@@ -19,29 +19,23 @@ const CardShop = ({ products }) => {
     const addToCartHandler = (product) => {
         dispatch(addItem(product));
     };
-   
+
     return (
         <>
-            {
-                products.map((product => {
-                    return (
-                        <div key={product.id} className='card_shop'>
-                            <div onClick={e => openDetails(e, product.id)} className="card_img">
-                                <img src={product.image} alt="" />
-                            </div>
-                            <div className="card_info">
-                                <h2>{product.title.slice(0, 10)}</h2>
-                                <h3>{product.description.slice(0, 10)}</h3>
+            <div key={products.id} className='card_shop'>
+                <div onClick={e => openDetails(e, products.id)} className="card_img">
+                    <img src={products.image} alt="" />
+                </div>
+                <div className="card_info">
+                    <h2>{products.title.slice(0, 10)}</h2>
+                    <h3>{products.description.slice(0, 10)}</h3>
 
-                                <div className="button">
-                                    <span>{product.price}$</span>
-                                    <button onClick={() => addToCartHandler(product)}>Add To Card</button>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                }))
-            }
+                    <div className="button">
+                        <span>{products.price}$</span>
+                        <button onClick={() => addToCartHandler(products)}>Add To Card</button>
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
