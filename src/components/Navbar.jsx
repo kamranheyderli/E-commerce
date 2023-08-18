@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { SlBasket } from "react-icons/sl";
 import { GrClose } from "react-icons/gr";
 // redux_toolkit
-import { removeItem,initializeCartFromLocalStorage  } from '../redux/root/addToCardSlice';
+import { removeItem, initializeCartFromLocalStorage, decrementItem, incrementItem } from '../redux/root/addToCardSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Navbar = () => {
@@ -33,13 +33,11 @@ const Navbar = () => {
     const removeFromCartHandler = (product) => {
         dispatch(removeItem(product.id));
 
+
         const updatedCartItems = cartItems.filter(item => item.id !== product.id);
         localStorage.setItem('cart', JSON.stringify(updatedCartItems));
 
-        if (updatedCartItems.length === 0) {
-            setIsSidebarOpen(false);
-        }
-        if (totalQuantity === 0) {
+        if (updatedCartItems.length === 0 || totalQuantity === 0) {
             setIsSidebarOpen(false);
         }
     };
@@ -83,9 +81,13 @@ const Navbar = () => {
                                                 <button onClick={() => removeFromCartHandler(product)}>Remove</button>
                                             </div>
                                         </div>
-                                        <div className="item_count ">
-                                            <p>Product Number:</p><span>{product.count}</span>
+
+                                        <div className="button_group">
+                                            <button onClick={() => dispatch(decrementItem(product.id))}>-</button>
+                                            <span>{product.count}</span>
+                                            <button onClick={() => dispatch(incrementItem(product.id))}>+</button>
                                         </div>
+
                                     </div>
                                 )
                             }))

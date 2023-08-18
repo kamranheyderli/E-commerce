@@ -44,6 +44,44 @@ const cartSlice = createSlice({
                 localStorage.setItem('totalPrice', state.totalPrice.toString());
             }
         },
+        incrementItem: (state, action) => {
+            const itemIdToIncrement = action.payload;
+            const existingItem = state.items.find(item => item.id === itemIdToIncrement);
+
+            if (existingItem) {
+                existingItem.count += 1;
+                state.totalQuantity += 1;
+                state.totalPrice += existingItem.price;
+                localStorage.setItem('totalQuantity', state.totalQuantity.toString());
+                localStorage.setItem('totalPrice', state.totalPrice.toString());
+            }
+        },
+        decrementItem: (state, action) => {
+            const itemIdToDecrement = action.payload;
+            const existingItem = state.items.find(item => item.id === itemIdToDecrement);
+        
+            if (existingItem) {
+                if (existingItem.count === 1) {
+                    state.totalQuantity -= 1;
+                    state.totalPrice -= existingItem.price; // Deduct the item's price from the total price
+                    state.items = state.items.filter(item => item.id !== itemIdToDecrement);
+                } else {
+                    existingItem.count -= 1;
+                    state.totalQuantity -= 1;
+                    state.totalPrice -= existingItem.price;
+                }
+                
+                if (existingItem.count === 0) {
+                    existingItem.price = 0; // Set the item's price to 0 when count is 0
+                }
+                
+                localStorage.setItem('totalQuantity', state.totalQuantity.toString());
+                localStorage.setItem('totalPrice', state.totalPrice.toString());
+            }
+        },
+        
+        
+      
         
     },
 });
@@ -55,5 +93,5 @@ export const initializeCartFromLocalStorage = () => {
     };
 };
 
-export const { addItem, removeItem } = cartSlice.actions;
+export const { addItem, removeItem,incrementItem,decrementItem} = cartSlice.actions;
 export default cartSlice.reducer;
