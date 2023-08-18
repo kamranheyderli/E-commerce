@@ -39,7 +39,7 @@ const Navbar = () => {
         if (updatedCartItems.length === 0) {
             setIsSidebarOpen(false);
         }
-        if (totalQuantity == 0) {
+        if (totalQuantity === 0) {
             setIsSidebarOpen(false);
         }
     };
