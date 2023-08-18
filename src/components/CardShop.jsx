@@ -1,5 +1,7 @@
 import React from 'react';
+// react_hooks
 import { useNavigate } from "react-router-dom";
+// redux_toolkit
 import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/root/addToCardSlice';
 

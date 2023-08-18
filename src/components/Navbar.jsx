@@ -1,13 +1,21 @@
-import { useState, useEffect } from 'react'; // useState'ı içe aktarın
+// hooks
+import { useState, useEffect } from 'react';
+// react_icons
 import { SlBasket } from "react-icons/sl";
+import { GrClose } from "react-icons/gr";
+// redux_toolkit
 import { removeItem } from '../redux/root/addToCardSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { GrClose } from "react-icons/gr"
+
 const Navbar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
     const totalQuantity = useSelector(state => state.cart.totalQuantity);
+    const totalPrice = useSelector(state => state.cart.totalPrice);
+   
+
 
     useEffect(() => {
         const storedCartItems = JSON.parse(localStorage.getItem('cart')) || [];
@@ -26,12 +34,14 @@ const Navbar = () => {
 
     const removeFromCartHandler = (product) => {
         dispatch(removeItem(product.id));
-
+    
         const updatedCartItems = cartItems.filter(item => item.id !== product.id);
         localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+    
+        if (updatedCartItems.length === 0) {
+            setIsSidebarOpen(false);
+        }
     };
-
-
 
     return (
         <>
@@ -49,7 +59,10 @@ const Navbar = () => {
 
                     <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
                         <div className="sidebar_head">
-                            <h2>Basket</h2>
+
+                            <div className="total_price">
+                                <h2> Total Price:</h2><span>{totalPrice.toFixed(2) }</span>
+                            </div>
                             <GrClose style={{ fontSize: "25px", marginRight: "10px", marginTop: "10px" }} onClick={toggleSidebar} />
                         </div>
 
@@ -69,10 +82,8 @@ const Navbar = () => {
                                                 <button onClick={() => removeFromCartHandler(product)}>Remove</button>
                                             </div>
                                         </div>
-                                        <div className="button_group flex">
-                                            <button>-</button>
-                                            <span>0</span>
-                                            <button>+</button>
+                                        <div className="item_count ">
+                                            <p>Product Number:</p><span>{product.count}</span>
                                         </div>
                                     </div>
                                 )

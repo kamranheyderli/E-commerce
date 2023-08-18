@@ -1,5 +1,8 @@
+// hooks
 import React, { useState, useEffect, } from 'react';
+// components
 import CardShop from '../components/CardShop';
+// axios
 import axios from 'axios';
 
 const Home = () => {

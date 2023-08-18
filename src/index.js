@@ -5,6 +5,7 @@ import App from './App';
 import "./styles/main.scss";
 // router dom
 import { BrowserRouter } from 'react-router-dom';
+// redux_toolkit
 import store from "./redux/store/store"
 import { Provider } from 'react-redux';
 
